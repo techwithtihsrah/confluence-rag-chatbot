@@ -15,9 +15,14 @@
 
 #     ASTRA_DB_API_ENDPOINT = os.getenv("ASTRA_DB_API_ENDPOINT", "").rstrip("/")
 #     ASTRA_DB_APPLICATION_TOKEN = os.getenv("ASTRA_DB_APPLICATION_TOKEN", "")
-#     ASTRA_DB_COLLECTION = os.getenv("ASTRA_DB_COLLECTION", "confluence_docs")
+#     ASTRA_DB_COLLECTION = os.getenv("ASTRA_DB_COLLECTION", "confluence_docs_hf_api")
 #     ASTRA_DB_NAMESPACE = os.getenv("ASTRA_DB_NAMESPACE", "")
-#     EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "all-MiniLM-L6-v2")
+
+#     HF_TOKEN = os.getenv("HF_TOKEN", "")
+#     HF_EMBEDDING_MODEL = os.getenv(
+#         "HF_EMBEDDING_MODEL",
+#         "sentence-transformers/all-MiniLM-L6-v2"
+#     )
 
 #     POSTGRES_URL = os.getenv("POSTGRES_URL", "")
 #     CHAT_HISTORY_LIMIT = int(os.getenv("CHAT_HISTORY_LIMIT", "6"))
@@ -56,7 +61,10 @@ class Settings:
     POSTGRES_URL = os.getenv("POSTGRES_URL", "")
     CHAT_HISTORY_LIMIT = int(os.getenv("CHAT_HISTORY_LIMIT", "6"))
 
-    FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    FRONTEND_URL = os.getenv(
+        "FRONTEND_URL",
+        "http://localhost:3000"
+    ).rstrip("/")
 
 
 settings = Settings()
