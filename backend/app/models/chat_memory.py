@@ -1,0 +1,149 @@
+# import uuid
+# from datetime import datetime
+
+# from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+# from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+# from app.db.postgres import Base
+
+
+# class ChatSession(Base):
+#     __tablename__ = "chat_sessions"
+
+#     id: Mapped[str] = mapped_column(
+#         String(36),
+#         primary_key=True,
+#         default=lambda: str(uuid.uuid4())
+#     )
+#     title: Mapped[str] = mapped_column(
+#         String(200),
+#         nullable=False,
+#         default="New Chat"
+#     )
+#     created_at: Mapped[datetime] = mapped_column(
+#         DateTime,
+#         default=datetime.utcnow,
+#         nullable=False
+#     )
+#     updated_at: Mapped[datetime] = mapped_column(
+#         DateTime,
+#         default=datetime.utcnow,
+#         nullable=False
+#     )
+
+#     messages: Mapped[list["ChatMessage"]] = relationship(
+#         "ChatMessage",
+#         back_populates="session",
+#         cascade="all, delete-orphan"
+#     )
+
+
+# class ChatMessage(Base):
+#     __tablename__ = "chat_messages"
+
+#     id: Mapped[int] = mapped_column(
+#         Integer,
+#         primary_key=True,
+#         autoincrement=True
+#     )
+#     session_id: Mapped[str] = mapped_column(
+#         String(36),
+#         ForeignKey("chat_sessions.id", ondelete="CASCADE"),
+#         nullable=False,
+#         index=True
+#     )
+#     role: Mapped[str] = mapped_column(
+#         String(20),
+#         nullable=False
+#     )
+#     content: Mapped[str] = mapped_column(
+#         Text,
+#         nullable=False
+#     )
+#     created_at: Mapped[datetime] = mapped_column(
+#         DateTime,
+#         default=datetime.utcnow,
+#         nullable=False
+#     )
+
+#     session: Mapped["ChatSession"] = relationship(
+#         "ChatSession",
+#         back_populates="messages"
+#     )
+
+import uuid
+from datetime import datetime
+
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.db.postgres import Base
+
+
+class ChatSession(Base):
+    __tablename__ = "chat_sessions"
+
+    id: Mapped[str] = mapped_column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4())
+    )
+    title: Mapped[str] = mapped_column(
+        String(200),
+        nullable=False,
+        default="New Chat"
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    messages: Mapped[list["ChatMessage"]] = relationship(
+        "ChatMessage",
+        back_populates="session",
+        cascade="all, delete-orphan"
+    )
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+    session_id: Mapped[str] = mapped_column(
+        String(36),
+        ForeignKey("chat_sessions.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True
+    )
+    role: Mapped[str] = mapped_column(
+        String(20),
+        nullable=False
+    )
+    content: Mapped[str] = mapped_column(
+        Text,
+        nullable=False
+    )
+    sources_json: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    session: Mapped["ChatSession"] = relationship(
+        "ChatSession",
+        back_populates="messages"
+    )
