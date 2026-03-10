@@ -4,9 +4,11 @@ python-dotenv
 groq
 requests
 beautifulsoup4
+langchain
 langchain-core
 langchain-text-splitters
 langchain-astradb
+langchain-groq
 sqlalchemy
 psycopg[binary]
 huggingface_hub
